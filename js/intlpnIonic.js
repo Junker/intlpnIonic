@@ -386,9 +386,9 @@ angular.module('intlpnIonic', ['ionic'])
                 } else {
                     if( scope.phone === '+' ) {
                         scope.$apply(function() {
-                            scope.isocode = scope.defaultCountry;
+                            scope.isocode = scope.defaultCountry ? scope.defaultCountry.toLowerCase() : undefined;
                             scope.countryIsoCode = scope.isocode;
-                            scope.dialCode = "+"+( scope.defaultCountry && scope.intlpnHelper.dialCodesByIso[scope.defaultCountry] ? scope.intlpnHelper.dialCodesByIso[scope.defaultCountry] : "" )
+                            scope.dialCode = "+"+( scope.isocode && scope.intlpnHelper.dialCodesByIso[scope.isocode] ? scope.intlpnHelper.dialCodesByIso[scope.isocode] : "" );
                             scope.countryDialCode = scope.dialCode;
                             scope.phone = '';
                         });
