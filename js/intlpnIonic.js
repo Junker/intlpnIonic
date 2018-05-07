@@ -368,6 +368,14 @@ angular.module('intlpnIonic', ['ionic'])
             //manage focus/blur of the phone field
             var input = element.find('input');
             input.bind('focus', function() {
+                // Reset validation
+                if (!ngModelCtrl.$valid) {
+                    Object.keys(ngModelCtrl.$error).forEach(function (validationRule) {
+                        //Passing undefined resets the input's validation to a pending state
+                        ngModelCtrl.$setValidity(validationRule, undefined);
+                    });
+                }
+                
                 if( scope.national ) {
                 } else {
                     if( !scope.phone ) {
