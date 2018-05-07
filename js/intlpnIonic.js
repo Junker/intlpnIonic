@@ -85,7 +85,7 @@ angular.module('intlpnIonic', ['ionic'])
             if(  self.onlyCountry.length ) {
                 angular.forEach( allCountries, function(value) {
                      angular.forEach( self.onlyCountry, function( restricted ) {
-                         if( restricted === value.iso2 )  {
+                         if( restricted.toLowerCase() === value.iso2 )  {
                              self.countries.push( value );
                          }
                      });
