@@ -53,9 +53,9 @@ var intlpnCtrl = function( $ionicModal, $scope, intlpnUtils ) {
 
     //default value
     if( !self.isocode && self.defaultCountry ) {
-        self.isocode = self.defaultCountry;
+        self.isocode = self.defaultCountry.toLowerCase();
         self.countryIsoCode = self.isocode;
-        self.dialCode = '+' + self.intlpnHelper.dialCodesByIso[self.defaultCountry];
+        self.dialCode = '+' + self.intlpnHelper.dialCodesByIso[self.isocode];
         self.countryDialCode = self.dialCode;
     }
 };
@@ -273,9 +273,9 @@ angular.module('intlpnIonic', ['ionic'])
                 //from raw value to formatted value, parenthesis, dash, ...
                 if( typeof modelValue === undefined || modelValue === '' ) {
                     $timeout(function() {
-                        scope.isocode = scope.defaultCountry;
-                        scope.countryIsoCode = scope.isocode
-                        scope.dialCode = '+' + (scope.intlpnHelper.dialCodesByIso[scope.defaultCountry] ? scope.intlpnHelper.dialCodesByIso[scope.defaultCountry]: "");
+                        scope.isocode = scope.defaultCountry ? scope.defaultCountry.toLowerCase() : undefined;
+                        scope.countryIsoCode = scope.isocode;
+                        scope.dialCode = '+' + (scope.intlpnHelper.dialCodesByIso[scope.isocode] ? scope.intlpnHelper.dialCodesByIso[scope.isocode]: "");
                         scope.countryDialCode = scope.dialCode;
                     });
                 }
@@ -335,16 +335,16 @@ angular.module('intlpnIonic', ['ionic'])
                         }
                     } else if( !scope.dialCode ) {
                         //default value
-                        scope.dialCode = "+"+( scope.defaultCountry && scope.intlpnHelper.dialCodesByIso[scope.defaultCountry] ? scope.intlpnHelper.dialCodesByIso[scope.defaultCountry] : "" );
+                        scope.dialCode = "+"+( scope.defaultCountry && scope.intlpnHelper.dialCodesByIso[scope.defaultCountry.toLowerCase()] ? scope.intlpnHelper.dialCodesByIso[scope.defaultCountry.toLowerCase()] : "" );
                         scope.countryDialCode = scope.dialCode;
                     }
                 }
             });
             scope.$watch('defaultCountry', function(newValue, oldValue) {
-                if( !scope.phone || scope.phone === scope.dialCode ) {
-                    scope.isocode = scope.defaultCountry;
+                if( newValue && (!scope.phone || scope.phone === scope.dialCode) ) {
+                    scope.isocode = newValue.toLowerCase();
                     scope.countryIsoCode = scope.isocode;
-                    scope.dialCode = "+"+( scope.defaultCountry && scope.intlpnHelper.dialCodesByIso[scope.defaultCountry] ? scope.intlpnHelper.dialCodesByIso[scope.defaultCountry] : "" )
+                    scope.dialCode = "+"+( scope.intlpnHelper.dialCodesByIso[scope.isocode] ? scope.intlpnHelper.dialCodesByIso[scope.isocode] : "" );
                     scope.countryDialCode = scope.dialCode;
                 }
             });
