@@ -346,6 +346,7 @@ angular.module('intlpnIonic', ['ionic'])
                     scope.countryIsoCode = scope.isocode;
                     scope.dialCode = "+"+( scope.intlpnHelper.dialCodesByIso[scope.isocode] ? scope.intlpnHelper.dialCodesByIso[scope.isocode] : "" );
                     scope.countryDialCode = scope.dialCode;
+                    scope.phone = scope.dialCode;
                 }
             });
             scope.$watch('onlyCountry', function(newValue, oldValue) {
